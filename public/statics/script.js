@@ -33,7 +33,7 @@ const paddleL = {
     width: 20,
     height: 80,
     speed: 5,
-    color: '#f55'
+    color: '#ff5'
 }
 const paddleR = {
     x: canvas.width - 35,
@@ -63,7 +63,7 @@ function drawPaddles() {
     ctx.fillRect(paddleR.x, paddleR.y, paddleR.width, paddleR.height)
 }
 
-function updateBall() {
+async function updateBall() {
     ball.x += ball.dx
     ball.y += ball.dy
     if (ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0) {
@@ -78,13 +78,13 @@ function updateBall() {
         ball.dx *= -1
         ball.x = paddleR.x - ball.radius
     }
-    if (ball.x - ball.radius <= 0) {
+    if (ball.x - ball.radius <= -5) {
         score.blue++
-        gameOver()
+        await gameOver()
     }
-    if (ball.x + ball.radius >= canvas.width) {
+    if (ball.x + ball.radius >= canvas.width + 5) {
         score.red++
-        gameOver()
+        await gameOver()
     }
 }
 
@@ -120,22 +120,26 @@ function updateScoreboard() {
     BScore.textContent = BLUESCORE.padStart(2, '0')
 }
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms))
+}
 
-function gameOver() {
+async function gameOver() {
+    await sleep(100)
     ball.x = canvas.width / 2
     ball.y = canvas.height / 2
     ball.dx = randomNoZero()
     ball.dy = randomNoZero()
 }
 
-function gameLoop() {
+async function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-    updateBall()
-    updatePaddles()
-    updateScoreboard()
     drawBall()
     drawPaddles()
+    await updateBall()
+    updatePaddles()
+    updateScoreboard()
 
     requestAnimationFrame(gameLoop)
 }
