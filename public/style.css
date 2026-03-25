@@ -1,0 +1,40 @@
+* {
+    cursor: default;
+}
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    background-color: #111;
+    color: #ccc;
+}
+#canvasGame {
+    background-color: #444;
+    border: 1px solid #ccc;
+    border-inline: 5px solid #f55;
+    box-shadow: 0px 0px 5px #e7e7e754;
+    border-radius: 2px;
+}
+.scoreboard {
+    font-weight: 600;
+    font-size: 2rem;
+    font-family: monospace;
+}
+#restart {
+    border: none;
+    padding: 1rem;
+    background-color: #444;
+    color: #ccc;
+    border-radius: 5px;
+    font-weight: 600;
+    margin-top: 1rem;
+    cursor: pointer;
+}
